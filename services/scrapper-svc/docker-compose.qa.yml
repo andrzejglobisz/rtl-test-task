@@ -1,0 +1,20 @@
+version: '3.4'
+services:
+  scrapper-svc:
+    image: ./some-qa-image
+    env_file: ./services/scrapper-svc/config.qa.env
+    restart: always
+    expose:
+      - "4010"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://0.0.0.0:12201
+        tag: auth-svc
+
+  auth-mongo:
+    restart: always
+    volumes:
+      - ./mongo/movies/data/db:/data/db
+    ports:
+      - "27017:27017"

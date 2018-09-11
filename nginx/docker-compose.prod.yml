@@ -1,0 +1,5 @@
+version: '3.4'
+services:
+  gateway:
+    image: ./some-prod-image
+    restart: always

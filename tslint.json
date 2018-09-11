@@ -1,0 +1,100 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-config-airbnb",
+        "tslint-config-prettier",
+        "tslint-no-unused-expression-chai"
+    ],
+    "jsRules": {},
+    "rules": {
+        "max-line-length": [true, 120],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
+        "no-angle-bracket-type-assertion": true,
+        "no-any": true,
+        "no-control-regex": false,
+        "no-default-export": false,
+        "no-duplicate-case": true,
+        "no-duplicate-variable": [true, "check-parameters"],
+        "no-floating-promises": true,
+        "no-for-in-array": true,
+        "no-import-side-effect": false,
+        "no-inferred-empty-object-type": false,
+        "no-magic-numbers": true,
+        "no-mergeable-namespace": true,
+        "no-namespace": true,
+        "no-parameter-properties": true,
+        "no-require-imports": false,
+        "no-unbound-method": false,
+        "no-unnecessary-qualifier": true,
+        "no-void-expression": [true, "ignore-arrow-function-shorthand"],
+        "one-line": [true, "check-catch", "check-else", "check-finally", "check-open-brace", "check-whitespace"],
+        "ordered-imports": [
+            false,
+            {
+                "import-sources-order": "case-insensitive",
+                "named-imports-order": "case-insensitive",
+                "module-source-path": "full"
+            }
+        ],
+        "prefer-for-of": true,
+        "prefer-template": true,
+        "promise-function-async": true,
+        "switch-default": true,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": {
+                    "objects": "always",
+                    "arrays": "always",
+                    "functions": "never",
+                    "typeLiterals": "ignore"
+                },
+                "singleline": "never",
+                "esSpecCompliant": true
+            }
+        ],
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            },
+            {
+                "call-signature": "onespace",
+                "index-signature": "onespace",
+                "parameter": "onespace",
+                "property-declaration": "onespace",
+                "variable-declaration": "onespace"
+            }
+        ],
+        "deprecation": true,
+        "no-implicit-dependencies": [true, "dev"],
+        "no-unnecessary-type-assertion": true,
+        "prefer-conditional-expression": true,
+        "prefer-switch": true,
+        "type-literal-delimiter": true,
+        "interface-name": false,
+        "object-literal-sort-keys": false,
+        "import-name": false,
+        "early-exit": true,
+        "return-undefined": true,
+        "newline-before-return": true,
+        "no-non-null-assertion": true,
+        "await-promise": true,
+        "no-unused-variable": true,
+        "restrict-plus-operands": true,
+        "cyclomatic-complexity": true,
+        "arrow-return-shorthand": [true, "multiline"],
+        "match-default-export-name": true,
+        "no-empty-character-class": true,
+        "no-extra-semi": true,
+        "ter-func-call-spacing": [true, "never"],
+        "handle-callback-err": true,
+        "strict-boolean-expressions": false
+    },
+    "rulesDirectory": []
+}

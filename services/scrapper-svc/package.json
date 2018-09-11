@@ -1,0 +1,89 @@
+{
+    "name": "scrapper-svc",
+    "version": "0.1.0",
+    "description": "Scrapper service",
+    "main": "index.js",
+    "repository": "git@git.epam.com:Andrzej_Globisz/rtl-test-task.git",
+    "author": "Andrzej Globisz",
+    "license": "ISC",
+    "private": true,
+    "scripts": {
+        "build": "yarn run lint && tsc",
+        "dev": "concurrently --names \"lint,tsc\" --prefix \"{name}-{pid}\" \"yarn run lint:watch\" \"tsc --watch\"",
+        "lint": "tslint --project ./tsconfig.json",
+        "lint:watch": "chokidar \"src/**/*.ts\" --command \"yarn run lint --force\" --initial --verbose --ignore \"node_modules\"",
+        "start": "node ./build/index.js",
+        "start-dev": "tsc && nodemon ./build/index.js --watch ./build --legacy-watch",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "@types/jest": "^23.3.1",
+        "@types/koa": "^2.0.46",
+        "@types/log4js": "^2.3.5",
+        "@types/mongoose": "^5.0.2",
+        "@types/node": "^9.3.0",
+        "chokidar-cli": "^1.2.0",
+        "concurrently": "^3.5.1",
+        "jest": "^23.6.0",
+        "nodemon": "^1.14.11",
+        "ts-jest": "^23.1.4",
+        "ts-node": "^5.0.1",
+        "tslint": "^5.9.1",
+        "tslint-config-airbnb": "^5.7.0",
+        "tslint-config-prettier": "^1.9.0",
+        "typescript": "^2.8.3"
+    },
+    "dependencies": {
+        "dotenv": "^6.0.0",
+        "koa": "^2.5.2",
+        "koa-body": "^4.0.4",
+        "koa-mongoose": "^2.0.0",
+        "koa-router": "^7.4.0",
+        "log4js": "^2.5.3",
+        "mongoose": "^5.2.14",
+        "path": "^0.12.7"
+    },
+    "jest": {
+        "testURL": "http://localhost",
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "src/**/*.{ts}",
+            "!src/**/*.d.{ts}",
+            "!src/**/*.spec.{ts}"
+        ],
+        "transform": {
+            "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+        },
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts?)$",
+        "coverageThreshold": {
+            "global": {
+                "branches": 20,
+                "functions": 20,
+                "lines": 20,
+                "statements": 20
+            }
+        },
+        "moduleFileExtensions": [
+            "ts",
+            "js",
+            "json",
+            "node"
+        ],
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ],
+        "globals": {
+            "ts-jest": {
+                "babelConfig": {
+                    "presets": [
+                        "env"
+                    ]
+                }
+            }
+        },
+        "moduleDirectories": [
+            "src",
+            "node_modules"
+        ]
+    }
+}

@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  movies-api:
+    build:
+      context: ./services/movies-api
+      target: builder
+    env_file: ./services/movies-api/config.dev.env
+    volumes:
+      - type: bind
+        source: ./services/movies-api/build
+        target: /app/build
+    ports:
+      - "4000:4000"
+    command: yarn run start-dev
+
+  movies-mongo:
+    volumes:
+      - movies-mongodata:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  movies-mongodata:

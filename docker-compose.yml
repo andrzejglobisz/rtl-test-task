@@ -1,0 +1,32 @@
+version: '3.4'
+services:
+  gateway:
+    volumes:
+      - type: bind
+        source: ./logs/nginx
+        target: /var/log/nginx
+    ports:
+      - "8080:8080"
+    depends_on:
+      - scrapper-svc
+      - movies-api
+
+  scrapper-svc:
+    depends_on:
+      - movies-mongo
+    volumes:
+      - type: bind
+        source: ./logs/scrapper-svc
+        target: /app/logs
+
+  movies-mongo:
+    image: mongo:3.6.3-jessie
+    command: mongod --port 27017 --smallfiles
+
+  movies-api:
+    depends_on:
+      - movies-mongo
+    volumes:
+      - type: bind
+        source: ./logs/movies-api
+        target: /app/logs
