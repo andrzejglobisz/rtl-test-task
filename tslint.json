@@ -1,11 +1,6 @@
 {
     "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended",
-        "tslint-config-airbnb",
-        "tslint-config-prettier",
-        "tslint-no-unused-expression-chai"
-    ],
+    "extends": ["tslint:recommended", "tslint-config-airbnb", "tslint-config-prettier"],
     "jsRules": {},
     "rules": {
         "max-line-length": [true, 120],
