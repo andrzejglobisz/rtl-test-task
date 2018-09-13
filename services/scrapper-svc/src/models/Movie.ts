@@ -15,4 +15,4 @@ export const MovieSchema = new Schema({
     cast: { type: [CastSchema], required: true },
 });
 
-export default model<MovieModel>('MovieModel', MovieSchema);
+export default model<MovieModel>('Movie', MovieSchema);

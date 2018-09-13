@@ -22,7 +22,7 @@
         "no-require-imports": false,
         "no-unbound-method": false,
         "no-unnecessary-qualifier": true,
-        "no-void-expression": [true, "ignore-arrow-function-shorthand"],
+        "no-void-expression": [false, "ignore-arrow-function-shorthand"],
         "one-line": [true, "check-catch", "check-else", "check-finally", "check-open-brace", "check-whitespace"],
         "ordered-imports": [
             false,

@@ -10,10 +10,6 @@ export interface Cast {
     birthday: string;
 }
 
-// export interface MovieOutDto extends Movie {
-//     id: number;
-// }
-
 export interface MovieFromApi {
     id: number;
     url: string;

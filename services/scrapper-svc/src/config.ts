@@ -7,6 +7,7 @@ interface AppConfig {
     MOVIES_URI: string;
     SERVICE_NAME: string;
     TVMAZE_URI: string;
+    MOVIES_PER_PAGE: number;
 }
 
 const {
@@ -34,6 +35,7 @@ const CONFIG: AppConfig = {
     ENV_MODE: ENV_MODE || 'DEV',
     SERVICE_NAME: npm_package_name || 'scrapper-svc',
     TVMAZE_URI: 'http://api.tvmaze.com',
+    MOVIES_PER_PAGE: 250,
 };
 
 export default CONFIG;
