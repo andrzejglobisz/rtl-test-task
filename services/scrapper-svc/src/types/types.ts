@@ -16,21 +16,21 @@ export interface MovieFromApi {
     name: string;
     type: string;
     language: string;
-    genres: [object];
+    genres: string[];
     status: string;
     runtime: number;
     premiered: string;
-    officialSite: string;
-    schedule: [object];
-    rating: [object];
+    officialSite: string | null;
+    schedule: {};
+    rating: {};
     weight: number;
-    network: [object];
-    webChannel: null;
-    externals: [object];
-    image: [object];
+    network: {};
+    webChannel: {} | null;
+    externals: {};
+    image: {};
     summary: string;
     updated: number;
-    _links: [object];
+    _links: {};
 }
 
 export interface CastFromApi {
@@ -38,19 +38,19 @@ export interface CastFromApi {
         id: number;
         url: string;
         name: string;
-        country: [object];
-        birthday: string;
-        deathday: string;
+        country: {};
+        birthday: string | null;
+        deathday: string | null;
         gender: string;
-        image: [object];
-        _links: [object];
+        image: {};
+        _links: {};
     };
     character: {
         id: number;
         url: string;
         name: string;
-        image: [object];
-        _links: [object];
+        image: {};
+        _links: {};
     };
     self: boolean;
     voice: boolean;

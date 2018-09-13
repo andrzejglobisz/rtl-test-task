@@ -17,7 +17,7 @@
         "test": "jest"
     },
     "devDependencies": {
-        "@types/jest": "^23.3.1",
+        "@types/jest": "^23.3.2",
         "@types/koa": "^2.0.46",
         "@types/koa-router": "^7.0.31",
         "@types/log4js": "^2.3.5",
@@ -25,7 +25,9 @@
         "@types/node": "^9.3.0",
         "chokidar-cli": "^1.2.0",
         "concurrently": "^3.5.1",
+        "enzyme-to-json": "^3.3.4",
         "jest": "^23.6.0",
+        "jest-serializer-html": "^5.0.0",
         "nodemon": "^1.14.11",
         "ts-jest": "^23.1.4",
         "ts-node": "^5.0.1",
@@ -55,7 +57,7 @@
             "!src/**/*.spec.{ts}"
         ],
         "transform": {
-            "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+            "\\.(ts)$": "ts-jest"
         },
         "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts?)$",
         "coverageThreshold": {
@@ -73,17 +75,8 @@
             "node"
         ],
         "snapshotSerializers": [
-            "enzyme-to-json/serializer"
+            "jest-serializer-html"
         ],
-        "globals": {
-            "ts-jest": {
-                "babelConfig": {
-                    "presets": [
-                        "env"
-                    ]
-                }
-            }
-        },
         "moduleDirectories": [
             "src",
             "node_modules"

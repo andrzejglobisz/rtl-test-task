@@ -1,9 +1,11 @@
-import { Movie, Cast } from '../types/types';
-import { MovieModel, CastModel } from '../models/Movie';
+import { Movie, Cast, MovieInDb, CastInDb } from '../types/types';
+import { CastModel, MovieModel } from '../models/Movie';
 
-export function mapToMovie(movies: MovieModel[]): Movie[] {
+type MoviesToMap = MovieInDb | MovieModel;
+
+export function mapToMovie(movies: MoviesToMap[]): Movie[] {
     return movies.map(
-        (movie: MovieModel): Movie => {
+        (movie: MoviesToMap): Movie => {
             const { id, name, cast } = movie;
 
             return {
@@ -15,9 +17,9 @@ export function mapToMovie(movies: MovieModel[]): Movie[] {
     );
 }
 
-function mapToCast(cast: CastModel[]): Cast[] {
+function mapToCast(cast: CastInDb[]): Cast[] {
     return cast.map(
-        (actor: CastModel): Cast => {
+        (actor: CastInDb): Cast => {
             const { id, name, birthday } = actor;
 
             return {
