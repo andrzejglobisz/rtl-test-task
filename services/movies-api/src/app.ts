@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as bodyParser from 'koa-body';
 
 import mongoConnector from './mongo.connector';
-// import { MoviesRouter } from './routes/movies.router';
+import { MoviesRouter } from './routes/movies.router';
 
 import configureLoggers from './utils/logger-config';
 import { errorHandlerMiddleware, errorEmitter } from './middlewares/error-handler.middleware';
@@ -19,8 +19,8 @@ export async function bootstrap(): Promise<Koa> {
 
     app.use(bodyParser());
 
-    // const moviesRouter = new MoviesRouter().getRouter();
-    // app.use(moviesRouter.routes());
+    const moviesRouter = new MoviesRouter().getRouter();
+    app.use(moviesRouter.routes());
 
     return app;
 }
