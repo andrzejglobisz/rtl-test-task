@@ -1,7 +1,8 @@
 import { Document, model, Schema } from 'mongoose';
-import { Movie } from '../types/types';
+import { Movie, Cast } from '../types/types';
 
 export type MovieModel = Document & Movie;
+export type CastModel = Document & Cast;
 
 export const CastSchema = new Schema({
     id: { type: Number, required: true },
