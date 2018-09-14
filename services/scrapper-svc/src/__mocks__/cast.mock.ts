@@ -18,7 +18,7 @@ export const castMock: Cast[] = [
     { id: 6, name: 'Nicholas Strong', birthday: '' },
 ];
 
-export const castFromApi: CastFromApi[] = [
+export const castFromApiMock: CastFromApi[] = [
     {
         person: {
             id: 1,
