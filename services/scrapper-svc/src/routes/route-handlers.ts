@@ -8,14 +8,22 @@ import limiter from '../utils/limiter.util';
 export class MoviesRouteHandlers {
     private moviesService: MoviesService;
     private dbService: DatabaseService;
+    private scrappingInProgress: boolean;
 
-    constructor(moviesService: MoviesService, dbService: DatabaseService) {
+    constructor(
+        moviesService: MoviesService = new MoviesService(),
+        dbService: DatabaseService = new DatabaseService()
+    ) {
         this.moviesService = moviesService;
         this.dbService = dbService;
+        this.scrappingInProgress = false;
     }
 
     public getMovies = async (ctx: Context): Promise<void> => {
+        if (this.scrappingInProgress) ctx.throw('Scrapper is already scrapping movies');
+
         try {
+            this.scrappingInProgress = true;
             const startingPage = await this.dbService.getCurrentPageToScrap();
             const movies = await this.moviesService.getMovies(startingPage);
 
@@ -35,6 +43,7 @@ export class MoviesRouteHandlers {
             };
         } catch (error) {
             ctx.throw(ctx.status, error);
+            this.scrappingInProgress = false;
         }
     };
 

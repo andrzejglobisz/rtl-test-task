@@ -13,22 +13,30 @@ export class MoviesService {
     public async getMovies(startingPage: number = 0): Promise<Movie[]> {
         let pageNo = startingPage;
         let movies: Movie[] = [];
-        try {
-            while (true) {
-                const scrapperUrl = `${CONFIG.TVMAZE_URI}/shows?page=${pageNo}`;
-                logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
-                const moviesResponse: AxiosResponse<MovieFromApi[]> = await limiter.schedule(
-                    async () => await axiosInstance.get(scrapperUrl)
-                );
-                movies = [...movies, ...this.mapMovies(moviesResponse.data)];
-                logger.info(`Number of movies from page ${pageNo} - ${moviesResponse.data.length}`);
+        while (pageNo < CONFIG.LAST_PAGE) {
+            try {
+                const moviesOnPage = await this.getMoviesFromPage(pageNo);
+                movies = [...movies, ...this.mapMovies(moviesOnPage)];
+                logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
                 pageNo += 1;
-            }
-        } catch {
-            logger.info(`Last page with movies: ${pageNo - 1}`);
+            } catch {
+                logger.info(`Last page with movies: ${pageNo - 1}`);
 
-            return movies;
+                return movies;
+            }
         }
+
+        return movies;
+    }
+
+    public async getMoviesFromPage(pageNo: number): Promise<MovieFromApi[]> {
+        const scrapperUrl = `${CONFIG.TVMAZE_URI}/shows?page=${pageNo}`;
+        logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
+        const moviesResponse: AxiosResponse<MovieFromApi[]> = await limiter.schedule(
+            async () => await axiosInstance.get(scrapperUrl)
+        );
+
+        return moviesResponse.data;
     }
 
     public async getCast(movie: Movie): Promise<Movie> {
