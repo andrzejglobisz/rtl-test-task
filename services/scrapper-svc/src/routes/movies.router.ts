@@ -9,8 +9,7 @@ export class MoviesRouter {
 
     public getRouter() {
         const router = new Router();
-        router.get('/shows', this.moviesRouteHandlers.getMovies);
-        router.get('/showsNo', this.moviesRouteHandlers.getMoviesNo);
+        router.get('/showsNo', this.moviesRouteHandlers.getMoviesNo); // just for checking DB status
         router.all('*', this.moviesRouteHandlers.errorHandler);
 
         return router;

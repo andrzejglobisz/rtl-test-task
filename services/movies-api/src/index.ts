@@ -2,7 +2,6 @@ import { getLogger } from 'log4js';
 
 import { bootstrap } from './app';
 import CONFIG from './config';
-import { MoviesService } from './services/movies.service';
 
 const defaultLogger = getLogger();
 
@@ -16,8 +15,6 @@ bootstrap()
                 }
 
                 defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`);
-                const moviesService = new MoviesService();
-                await moviesService.triggerScrapper();
             }
         );
     })
