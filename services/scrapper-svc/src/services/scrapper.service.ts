@@ -1,8 +1,9 @@
-import { BaseContext } from 'koa';
+import { getLogger } from 'log4js';
 
 import { MoviesService } from '../services/movies.service';
 import { DatabaseService } from '../services/database.service';
-import limiter from '../utils/limiter.util';
+
+const logger = getLogger();
 
 export class ScrapperService {
     private moviesService: MoviesService;
@@ -18,31 +19,16 @@ export class ScrapperService {
         this.scrappingInProgress = false;
     }
 
-    public getMovies = async (ctx: BaseContext): Promise<void> => {
-        if (this.scrappingInProgress) ctx.throw('Scrapper is already scrapping movies');
+    public getMovies = async (): Promise<void> => {
+        if (this.scrappingInProgress) throw Error('Scrapper is already scrapping movies');
 
         try {
             this.scrappingInProgress = true;
             const startingPage = await this.dbService.getCurrentPageToScrap();
-            const movies = await this.moviesService.getMovies(startingPage);
-
-            if (!movies.length) {
-                ctx.throw(ctx.status, "Can't find any movies");
-            }
-
-            const moviesWithCastPromise = movies.map(async movie => {
-                const movieToDb = await limiter.schedule(async () => this.moviesService.getCast(movie));
-                await this.dbService.saveMovie(movieToDb);
-
-                return movieToDb;
-            });
-
-            ctx.body = {
-                data: { startingPage, moviesDownloaded: moviesWithCastPromise.length },
-            };
+            await this.moviesService.getMovies(startingPage);
         } catch (error) {
-            ctx.throw(ctx.status, error);
             this.scrappingInProgress = false;
+            logger.error(`${error.response.status}: ${error.response.statusText}`);
         }
     };
 }

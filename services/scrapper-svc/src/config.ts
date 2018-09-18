@@ -7,8 +7,9 @@ interface AppConfig {
     MOVIES_URI: string;
     SERVICE_NAME: string;
     TVMAZE_URI: string;
+    TVMAZE_SHOWS_QUERY: string;
+    TVMAZE_CAST_PATH: string;
     MOVIES_PER_PAGE: number;
-    LAST_PAGE: number;
 }
 
 const {
@@ -35,9 +36,10 @@ const CONFIG: AppConfig = {
     MOVIES_URI: MOVIES_URI || DEFAULT_MOVIES_URI,
     ENV_MODE: ENV_MODE || 'DEV',
     SERVICE_NAME: npm_package_name || 'scrapper-svc',
-    TVMAZE_URI: 'http://api.tvmaze.com',
+    TVMAZE_URI: 'http://api.tvmaze.com/shows',
+    TVMAZE_SHOWS_QUERY: '?page=',
+    TVMAZE_CAST_PATH: '/cast',
     MOVIES_PER_PAGE: 250,
-    LAST_PAGE: 300,
 };
 
 export default CONFIG;

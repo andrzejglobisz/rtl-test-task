@@ -20,13 +20,14 @@ bootstrap()
             }
         );
         scrapperService
-            .getMovies(app.context)
+            .getMovies()
             .then(() => {
                 defaultLogger.info('Scrapping finished');
             })
             .catch(error => {
                 defaultLogger.error(`Error while scrapping: ${error}`);
             });
+
     })
     .catch((err: Error) => {
         defaultLogger.error(err.message);
