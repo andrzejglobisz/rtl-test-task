@@ -7,7 +7,7 @@ export interface Movie {
 export interface Cast {
     id: number;
     name: string;
-    birthday: string;
+    birthday: string | null;
 }
 
 export interface MovieFromApi {

@@ -51,7 +51,7 @@ export class MoviesService {
 
     public async getCast(movie: Movie): Promise<Movie> {
         logger.info(`Getting cast for ${movie.name} (id: ${movie.id})`);
-        const scrapperUrl = `${CONFIG.TVMAZE_URI}/${movie.id}${CONFIG.TVMAZE_SHOWS_QUERY}`;
+        const scrapperUrl = `${CONFIG.TVMAZE_URI}/${movie.id}${CONFIG.TVMAZE_CAST_PATH}`;
         const cast: AxiosResponse<CastFromApi[]> = await axiosInstance.get(scrapperUrl);
         const sortedCast = cast.data.length ? this.sortCast(this.mapCast(cast.data)) : [];
 
@@ -70,14 +70,16 @@ export class MoviesService {
     }
 
     public sortCast(cast: Cast[]): Cast[] {
-        return cast.sort((a, b) => b.birthday.localeCompare(a.birthday));
+        return cast.sort(
+            (a, b) => (a.birthday ? (b.birthday ? Date.parse(a.birthday) - Date.parse(b.birthday) : -1) : 1)
+        );
     }
 
     public mapCast(cast: CastFromApi[]): Cast[] {
         return cast.map(actor => ({
             id: actor.person.id,
             name: actor.person.name,
-            birthday: actor.person.birthday ? actor.person.birthday : '',
+            birthday: actor.person.birthday,
         }));
     }
 }
