@@ -6,6 +6,7 @@ interface AppConfig {
     SCRAPPER_URI: string;
     ENV_MODE: string;
     SERVICE_NAME: string;
+    MOVIES_PER_PAGE: number;
 }
 
 const {
@@ -32,6 +33,7 @@ const CONFIG: AppConfig = {
     SCRAPPER_URI: SCRAPPER_URI || DEFAULT_SCRAPPER_URI,
     ENV_MODE: ENV_MODE || 'DEV',
     SERVICE_NAME: npm_package_name || 'movies-api',
+    MOVIES_PER_PAGE: 250,
 };
 
 export default CONFIG;

@@ -15,8 +15,9 @@ export class MoviesRouteHandlers {
 
     public getMovies = async (ctx: Context, next: AnyFunction): Promise<void> => {
         try {
-            logger.info('Getting movies from database');
-            const movies = await this.moviesService.getMovies();
+            const { page } = ctx.query;
+            logger.info(`Getting movies from database - page ${page}`);
+            const movies = await this.moviesService.getMovies(Number(page));
             logger.info(`Got ${movies.length} movies`);
 
             ctx.body = {
