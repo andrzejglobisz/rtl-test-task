@@ -8,7 +8,5 @@ For development navigate to each service directory (/services/movies-api and /se
 - movies-api runs by default on localhost:4000
 
 - after startup Scrapper checks index of last page with movies that was previously scrapped and saved to DB and starts scrapping from it. If scrapper is already runnning it can't be triggered second time
-- GET localhost:4010/showsNo - returns index of last movie and number of movies in the DB
 
 - GET localhost:4000/shows?page=:pageNo - movies-api returns movies with cast from the database - 250 per page, same as from TVMaze
-
