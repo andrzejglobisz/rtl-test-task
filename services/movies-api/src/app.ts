@@ -1,4 +1,5 @@
 import * as Koa from 'koa';
+import * as Router from 'koa-router';
 import * as bodyParser from 'koa-body';
 
 import mongoConnector from './mongo.connector';
@@ -19,8 +20,10 @@ export async function bootstrap(): Promise<Koa> {
 
     app.use(bodyParser());
 
-    const moviesRouter = new MoviesRouter().getRouter();
-    app.use(moviesRouter.routes());
+    const router = new Router();
+    MoviesRouter.init(router);
+
+    app.use(router.routes());
 
     return app;
 }

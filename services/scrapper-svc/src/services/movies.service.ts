@@ -26,7 +26,7 @@ export class MoviesService {
                 const movies = [...this.mapMovies(moviesOnPage)];
                 logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
                 await asyncForEach(movies, async movie => {
-                    await promiseRetryWrapper(() => this.getAndSaveCast(movie));
+                    await promiseRetryWrapper(async () => this.getAndSaveCast(movie));
                 });
             }
             pageNo += 1;
