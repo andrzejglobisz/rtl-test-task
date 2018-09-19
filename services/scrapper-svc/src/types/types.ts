@@ -56,5 +56,6 @@ export interface CastFromApi {
     voice: boolean;
 }
 
-export type AnyFunction = () => void;
-export type AsyncFunction = () => Promise<void>;
+// tslint:disable no-any
+export type AnyFunction = (...args: any[]) => any;
+export type AsyncFunction = (...args: any[]) => Promise<any>;

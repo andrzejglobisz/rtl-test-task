@@ -10,6 +10,7 @@ interface AppConfig {
     TVMAZE_SHOWS_QUERY: string;
     TVMAZE_CAST_PATH: string;
     MOVIES_PER_PAGE: number;
+    RETRY_REQUEST_TIMEOUT: number;
 }
 
 const {
@@ -40,6 +41,7 @@ const CONFIG: AppConfig = {
     TVMAZE_SHOWS_QUERY: '?page=',
     TVMAZE_CAST_PATH: '/cast',
     MOVIES_PER_PAGE: 250,
+    RETRY_REQUEST_TIMEOUT: 5000,
 };
 
 export default CONFIG;

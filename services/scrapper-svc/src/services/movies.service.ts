@@ -3,9 +3,10 @@ import { getLogger } from 'log4js';
 import { Cast, CastFromApi, MovieFromApi, Movie } from '../types/types';
 
 import axiosInstance from '../utils/axios-instance.util';
+import { asyncForEach } from '../utils/async.foreach';
+import { promiseRetryWrapper } from '../utils/promise.retry';
 
 import CONFIG from '../config';
-import limiter from '../utils/limiter.util';
 import { DatabaseService } from './database.service';
 
 const logger = getLogger();
@@ -24,29 +25,28 @@ export class MoviesService {
             } else {
                 const movies = [...this.mapMovies(moviesOnPage)];
                 logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
-                movies.forEach(async movie => {
-                    const movieWithCast = await limiter.schedule(async () => await this.getCast(movie));
-                    await this.dbService.saveMovie(movieWithCast);
-                    logger.info(`Movie ${movieWithCast.name} saved to database`);
+                await asyncForEach(movies, async movie => {
+                    await promiseRetryWrapper(() => this.getAndSaveCast(movie));
                 });
             }
             pageNo += 1;
         }
     }
 
+    public async getAndSaveCast(movie: Movie) {
+        const movieWithCast = await this.getCast(movie);
+        await this.dbService.saveMovie(movieWithCast);
+        logger.info(`Movie ${movieWithCast.name} saved to database`);
+
+        return movieWithCast;
+    }
+
     public async getMoviesFromPage(pageNo: number): Promise<MovieFromApi[]> {
         const scrapperUrl = `${CONFIG.TVMAZE_URI}${CONFIG.TVMAZE_SHOWS_QUERY}${pageNo}`;
         logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
-        let moviesOnPage: MovieFromApi[] = [];
-        await limiter.schedule(async () => {
-            try {
-                moviesOnPage = (await axiosInstance.get(scrapperUrl)).data;
-            } catch (error) {
-                logger.error(`${error.response.status}: ${error.response.statusText} - can't read from ${scrapperUrl}`);
-            }
-        });
+        const moviesOnPage = await promiseRetryWrapper(() => axiosInstance.get(scrapperUrl));
 
-        return moviesOnPage;
+        return moviesOnPage.data;
     }
 
     public async getCast(movie: Movie): Promise<Movie> {
