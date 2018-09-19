@@ -22,7 +22,7 @@ const {
 const DEFAULT_LISTENING_PORT = 4000;
 const DEFAULT_MONGODB_URI = 'mongodb://movies-mongo:27017/movies';
 const DEFAULT_MONGODB_RECONNECT_ATTEMPTS = 3;
-const DEFAULT_MONGODB_RECONNECT_INTERVAL = 10;
+const DEFAULT_MONGODB_RECONNECT_INTERVAL = 10000;
 const DEFAULT_SCRAPPER_URI = 'http://scrapper-svc:4010';
 
 const CONFIG: AppConfig = {

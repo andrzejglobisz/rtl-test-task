@@ -7,9 +7,8 @@ import CONFIG from './config';
 const defaultLogger = getLogger();
 const setTimeoutPromise = promisify(setTimeout);
 
-const SECOND_IN_MS: number = 1000;
 const reconnectAttempts: number = CONFIG.MONGODB_RECONNECT_ATTEMPTS;
-const reconnectInterval: number = CONFIG.MONGODB_RECONNECT_INTERVAL * SECOND_IN_MS;
+const reconnectInterval: number = CONFIG.MONGODB_RECONNECT_INTERVAL;
 
 process.on('SIGINT', async () => {
     defaultLogger.info('[ MongoDB ] Closing all connections due to service termination ...');
