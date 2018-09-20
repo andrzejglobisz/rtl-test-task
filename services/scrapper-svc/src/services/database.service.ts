@@ -32,10 +32,11 @@ export class DatabaseService {
     };
 
     public getHighestId = async (): Promise<number> => {
-        const movieIds = await MovieModel.find({}, 'id').exec();
-        const highestId = !!movieIds.length ? Math.max(...movieIds.map(movie => Number(movie.id))) : 0;
+        const lastMovie = await MovieModel.findOne()
+            .sort({ _id: -1 })
+            .exec();
 
-        return highestId;
+        return lastMovie ? lastMovie.id : 0;
     };
 
     public getCurrentPageToScrap = async (): Promise<number> => {
