@@ -5,9 +5,10 @@ import { Cast, CastFromApi, MovieFromApi, Movie } from '../types/types';
 import axiosInstance from '../utils/axios-instance.util';
 import { asyncForEach } from '../utils/async.foreach';
 import { promiseRetryWrapper } from '../utils/promise.retry';
+import { DatabaseService } from './database.service';
 
 import CONFIG from '../config';
-import { DatabaseService } from './database.service';
+import { HTTP_STATUS } from '../types/status.codes';
 
 const logger = getLogger();
 
@@ -19,16 +20,11 @@ export class MoviesService {
         let pageNo = startingPage;
         while (true) {
             const moviesOnPage = await this.getMoviesFromPage(pageNo);
-            if (!moviesOnPage.length) {
-                logger.info(`Last page with movies: ${pageNo - 1}`);
-                break;
-            } else {
-                const movies = [...this.mapMovies(moviesOnPage)];
-                logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
-                await asyncForEach(movies, async movie => {
-                    await this.promiseRetryWrapper(async () => this.getAndSaveCast(movie));
-                });
-            }
+            const movies = [...this.mapMovies(moviesOnPage)];
+            logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
+            await asyncForEach(movies, async movie => {
+                await this.promiseRetryWrapper(async () => this.getAndSaveCast(movie));
+            });
             pageNo += 1;
         }
     }
@@ -44,9 +40,16 @@ export class MoviesService {
     public async getMoviesFromPage(pageNo: number): Promise<MovieFromApi[]> {
         const scrapperUrl = `${CONFIG.TVMAZE_URI}${CONFIG.TVMAZE_SHOWS_QUERY}${pageNo}`;
         logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
-        const moviesOnPage = await promiseRetryWrapper(() => axiosInstance.get(scrapperUrl));
+        try {
+            const moviesOnPage = await promiseRetryWrapper(() => axiosInstance.get(scrapperUrl));
 
-        return moviesOnPage.data;
+            return moviesOnPage.data;
+        } catch (error) {
+            if (error.response.status === HTTP_STATUS.NOT_FOUND) {
+                logger.info(`Last page with movies: ${pageNo - 1}`);
+            }
+            throw error;
+        }
     }
 
     public async getCast(movie: Movie): Promise<Movie> {

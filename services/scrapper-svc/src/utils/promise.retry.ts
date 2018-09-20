@@ -20,6 +20,7 @@ export async function promiseRetryWrapper(fn: AsyncFunction): Promise<any> {
                 if (error.response.status === HTTP_STATUS.TOO_MANY_REQUESTS) {
                     retry();
                 }
+                throw error;
             }
         },
         { minTimeout: CONFIG.RETRY_REQUEST_TIMEOUT }
