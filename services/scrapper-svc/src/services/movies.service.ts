@@ -13,8 +13,12 @@ import { HTTP_STATUS } from '../types/status.codes';
 const logger = getLogger();
 
 export class MoviesService {
-    public dbService = new DatabaseService();
+    public dbService: DatabaseService;
     public promiseRetryWrapper = promiseRetryWrapper;
+    
+    constructor(dbService: DatabaseService = new DatabaseService()) {
+        this.dbService = dbService;
+    }
 
     public async getMovies(startingPage: number = 0): Promise<void> {
         let pageNo = startingPage;
