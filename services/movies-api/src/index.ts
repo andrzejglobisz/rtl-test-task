@@ -9,13 +9,7 @@ bootstrap()
     .then(app => {
         app.listen(
             CONFIG.LISTENING_PORT,
-            async (err?: Error): Promise<void> => {
-                if (err) {
-                    defaultLogger.error(err.message);
-                }
-
-                defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`);
-            }
+            async (): Promise<void> => defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`)
         );
     })
     .catch((err: Error) => {

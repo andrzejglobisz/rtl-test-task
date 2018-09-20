@@ -11,13 +11,7 @@ bootstrap()
     .then(app => {
         app.listen(
             CONFIG.LISTENING_PORT,
-            (err?: Error): void => {
-                if (err) {
-                    defaultLogger.error(err.message);
-                }
-
-                defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`);
-            }
+            (): void => defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`)
         );
         scrapperService
             .getMovies()
@@ -27,7 +21,6 @@ bootstrap()
             .catch(error => {
                 defaultLogger.error(`Error while scrapping: ${error}`);
             });
-
     })
     .catch((err: Error) => {
         defaultLogger.error(err.message);
