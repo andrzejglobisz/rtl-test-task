@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Movies service should call for cast list and save movies 1`] = `
+Object {
+  "cast": Array [
+    Object {
+      "birthday": "1963-04-08",
+      "id": 9,
+      "name": "Dean Norris",
+    },
+    Object {
+      "birthday": "1978-01-15",
+      "id": 4,
+      "name": "Eddie Cahill",
+    },
+    Object {
+      "birthday": "1979-02-01",
+      "id": 2,
+      "name": "Rachelle Lefevre",
+    },
+    Object {
+      "birthday": "1979-07-17",
+      "id": 1,
+      "name": "Mike Vogel",
+    },
+    Object {
+      "birthday": "1988-02-24",
+      "id": 3,
+      "name": "Alex Koch",
+    },
+    Object {
+      "birthday": "1996-09-12",
+      "id": 5,
+      "name": "Colin Ford",
+    },
+    Object {
+      "birthday": "1996-11-22",
+      "id": 7,
+      "name": "Mackenzie Lintz",
+    },
+  ],
+  "id": 1,
+  "name": "Under the Dome",
+}
+`;

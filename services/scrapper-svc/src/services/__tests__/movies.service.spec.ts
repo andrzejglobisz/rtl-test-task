@@ -2,7 +2,7 @@ import * as moxios from 'moxios';
 import * as sinon from 'sinon';
 
 import { MoviesService } from '../movies.service';
-import { moviesMock } from '../../__mocks__/movies.mock';
+import { moviesMock, moviesFromApiMock } from '../../__mocks__/movies.mock';
 import { castFromApiMock } from '../../__mocks__/cast.mock';
 
 import axiosInstance from '../../utils/axios-instance.util';
@@ -20,12 +20,26 @@ describe('Movies service', () => {
         sandbox.restore();
     });
 
-    it('should call for cast list', () => {
+    it('should call for cast list and save movies', () => {
         moxios.withMock(async () => {
             sandbox.stub(axiosInstance, 'get').returns({ data: [...castFromApiMock] });
-            const returnedMovieWithCast = await moviesService.getCast(moviesMock[0]);
+            moviesService.dbService.saveMovie = jest.fn();
 
-            expect(returnedMovieWithCast).toEqual(moviesMock[0]);
+            const returnedMovieWithCast = await moviesService.getAndSaveCast(moviesMock[0]);
+
+            expect(moviesService.dbService.saveMovie).toHaveBeenCalledWith(returnedMovieWithCast);
+            expect(returnedMovieWithCast).toMatchSnapshot();
+        });
+    });
+
+    it('should call for movies', () => {
+        moxios.withMock(async () => {
+            sandbox.stub(axiosInstance, 'get').returns({ data: [...moviesFromApiMock] });
+            moviesService.promiseRetryWrapper = jest.fn();
+
+            await moviesService.getMovies();
+
+            expect(moviesService.promiseRetryWrapper).toHaveBeenCalledTimes(moviesFromApiMock.length);
         });
     });
 });

@@ -12,13 +12,13 @@ import { DatabaseService } from './database.service';
 const logger = getLogger();
 
 export class MoviesService {
-    private dbService = new DatabaseService();
+    public dbService = new DatabaseService();
+    public promiseRetryWrapper = promiseRetryWrapper;
 
     public async getMovies(startingPage: number = 0): Promise<void> {
         let pageNo = startingPage;
         while (true) {
             const moviesOnPage = await this.getMoviesFromPage(pageNo);
-
             if (!moviesOnPage.length) {
                 logger.info(`Last page with movies: ${pageNo - 1}`);
                 break;
@@ -26,7 +26,7 @@ export class MoviesService {
                 const movies = [...this.mapMovies(moviesOnPage)];
                 logger.info(`Number of movies from page ${pageNo} - ${moviesOnPage.length}`);
                 await asyncForEach(movies, async movie => {
-                    await promiseRetryWrapper(async () => this.getAndSaveCast(movie));
+                    await this.promiseRetryWrapper(async () => this.getAndSaveCast(movie));
                 });
             }
             pageNo += 1;

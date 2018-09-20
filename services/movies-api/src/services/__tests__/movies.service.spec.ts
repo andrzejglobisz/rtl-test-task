@@ -9,10 +9,10 @@ const sandbox = createSandbox();
 
 describe('Movies service', () => {
     const moviesService = new MoviesService();
-    sandbox.stub(MovieModel, 'find').returns({ exec: () => moviesFromDbMock });
+    sandbox.stub(MovieModel, 'find').returns({ exec: () => moviesMock });
 
     it('should call for movies list', async () => {
-        const returndedMovies = await moviesService.getMovies();
+        const returndedMovies = await moviesService.getMovies(0);
         expect(returndedMovies).toEqual(moviesMock);
     });
 });
