@@ -2,13 +2,10 @@ import { getLogger } from 'log4js';
 import * as mongoose from 'mongoose';
 import { promisify } from 'util';
 
-import CONFIG from './config';
+import config, { AppConfig } from './config.loader';
 
 const defaultLogger = getLogger();
 const setTimeoutPromise = promisify(setTimeout);
-
-const reconnectAttempts: number = CONFIG.MONGODB_RECONNECT_ATTEMPTS;
-const reconnectInterval: number = CONFIG.MONGODB_RECONNECT_INTERVAL;
 
 process.on('SIGINT', async () => {
     defaultLogger.info('[ MongoDB ] Closing all connections due to service termination ...');
@@ -17,6 +14,8 @@ process.on('SIGINT', async () => {
 });
 
 export default async function mongoConnector(): Promise<mongoose.Connection> {
+    const reconnectAttempts: number = config.get(AppConfig.MONGODB_RECONNECT_ATTEMPTS);
+    const reconnectInterval: number = config.get(AppConfig.MONGODB_RECONNECT_INTERVAL);
     for (let i = 0; i < reconnectAttempts; i += 1) {
         try {
             if (i > 0) {
@@ -26,7 +25,7 @@ export default async function mongoConnector(): Promise<mongoose.Connection> {
             defaultLogger.info(`[ MongoDB ] Connection attempt: ${i + 1}/${reconnectAttempts} ...`);
 
             await mongoose.connect(
-                CONFIG.MONGODB_URI,
+                config.get(AppConfig.MONGODB_URI),
                 { useNewUrlParser: true }
             );
 

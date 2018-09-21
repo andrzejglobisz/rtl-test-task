@@ -2,7 +2,6 @@ version: '3.4'
 services:
   movies-api:
     image: ./some-prod-image
-    env_file: ./services/movies-api/config.prod.env
     restart: always
     expose:
       - "4000"

@@ -4,11 +4,13 @@ services:
     build:
       context: ./services/movies-api
       target: builder
-    env_file: ./services/movies-api/config.dev.env
     volumes:
       - type: bind
         source: ./services/movies-api/build
         target: /app/build
+      - type: bind
+        source: ./services/movies-api/src/config
+        target: /app/build/config
     ports:
       - "4000:4000"
     command: yarn run start-dev
