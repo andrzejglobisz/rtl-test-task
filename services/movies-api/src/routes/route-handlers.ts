@@ -16,11 +16,11 @@ export class MoviesRouteHandlers {
 
     public getMovies = async (ctx: Context, next: AnyFunction): Promise<void> => {
         try {
-            const { page } = ctx.query;
-            if (isNaN(page)) {
+            const page = Number(ctx.query.page);
+            if (!Number.isInteger(page) || page < 0) {
                 ctx.status = HTTP_STATUS.BAD_REQUEST;
                 ctx.throw();
-            }
+            } 
             logger.info(`Getting movies from database - page ${page}`);
             const movies = await this.moviesService.getMovies(page);
             logger.info(`Got ${movies.length} movies`);
