@@ -23,7 +23,7 @@ export async function bootstrap(): Promise<Koa> {
     app.use(bodyParser());
 
     const router = new Router();
-    MoviesRouter.init(router);
+    MoviesRouter.init(router, '/shows');
 
     app.use(router.routes());
 
