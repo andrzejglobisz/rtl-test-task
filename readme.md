@@ -4,7 +4,6 @@ To run the project navigate to root directory and run 'yarn run up --mode DEV'. 
 
 For development navigate to each service directory (/services/movies-api and /services/scrapper-svc) and run 'yarn' to get dependencies. Later run 'yarn run dev' to watch for changes in files.
 
-- scrapper-svc runs by default on localhost:4010
 - movies-api runs by default on localhost:4000
 
 - after startup Scrapper checks index of last page with movies that was previously scrapped and saved to DB and starts scrapping from it. If scrapper is already runnning it can't be triggered second time

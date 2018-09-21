@@ -25,8 +25,6 @@ COPY git.properties ./
 
 RUN chown -R node:node .
 
-EXPOSE 4010
-
 USER node
 
 CMD ["node", "./build/index.js"]

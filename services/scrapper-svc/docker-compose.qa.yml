@@ -3,8 +3,6 @@ services:
   scrapper-svc:
     image: ./some-qa-image
     restart: always
-    expose:
-      - "4010"
     logging:
       driver: gelf
       options:

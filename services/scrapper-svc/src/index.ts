@@ -1,19 +1,14 @@
 import { getLogger } from 'log4js';
-import * as nconf from 'nconf';
 import { bootstrap } from './app';
 
 import { ScrapperService } from './services/scrapper.service';
-import { AppConfig } from './types/config';
 
 const defaultLogger = getLogger();
 const scrapperService = new ScrapperService();
 
 bootstrap()
-    .then(app => {
-        app.listen(
-            nconf.get(AppConfig.LISTENING_PORT),
-            (): void => defaultLogger.info(`Server is listening on port ${nconf.get(AppConfig.LISTENING_PORT)}`)
-        );
+    .then(() => {
+        defaultLogger.info('Scrapper is running');
         scrapperService
             .getMovies()
             .then(() => {

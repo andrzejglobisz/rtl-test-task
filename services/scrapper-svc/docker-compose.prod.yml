@@ -3,8 +3,6 @@ services:
   scrapper-svc:
     image: ./some-prod-image
     restart: always
-    expose:
-      - "4010"
 
   movies-mongo:
     restart: always

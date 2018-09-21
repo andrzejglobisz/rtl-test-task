@@ -3,7 +3,6 @@ import * as nconf from 'nconf';
 import * as path from 'path';
 
 import mongoConnector from './mongo.connector';
-
 import configureLoggers from './utils/logger-config';
 
 export async function bootstrap(): Promise<http.Server> {
