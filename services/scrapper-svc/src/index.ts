@@ -1,7 +1,8 @@
 import { getLogger } from 'log4js';
 
 import { bootstrap } from './app';
-import CONFIG from './config';
+import config, { AppConfig } from './config.loader';
+
 import { ScrapperService } from './services/scrapper.service';
 
 const defaultLogger = getLogger();
@@ -10,8 +11,8 @@ const scrapperService = new ScrapperService();
 bootstrap()
     .then(app => {
         app.listen(
-            CONFIG.LISTENING_PORT,
-            (): void => defaultLogger.info(`Server is listening on port ${CONFIG.LISTENING_PORT}`)
+            config.get(AppConfig.LISTENING_PORT),
+            (): void => defaultLogger.info(`Server is listening on port ${config.get(AppConfig.LISTENING_PORT)}`)
         );
         scrapperService
             .getMovies()

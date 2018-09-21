@@ -4,7 +4,7 @@ import { getLogger } from 'log4js';
 
 import { AnyFunction, AsyncFunction } from '../types/types';
 import { HTTP_STATUS } from '../types/status.codes';
-import CONFIG from '../config';
+import config, { AppConfig } from '../config.loader';
 
 const logger = getLogger();
 
@@ -23,7 +23,7 @@ export async function promiseRetryWrapper(fn: AsyncFunction): Promise<any> {
                 throw error;
             }
         },
-        { minTimeout: CONFIG.RETRY_REQUEST_TIMEOUT }
+        { minTimeout: config.get(AppConfig.RETRY_REQUEST_TIMEOUT) }
     );
 
     return result;

@@ -7,7 +7,7 @@ import { asyncForEach } from '../utils/async.foreach';
 import { promiseRetryWrapper } from '../utils/promise.retry';
 import { DatabaseService } from './database.service';
 
-import CONFIG from '../config';
+import config, { AppConfig } from '../config.loader';
 import { HTTP_STATUS } from '../types/status.codes';
 
 const logger = getLogger();
@@ -15,7 +15,7 @@ const logger = getLogger();
 export class MoviesService {
     public dbService: DatabaseService;
     public promiseRetryWrapper = promiseRetryWrapper;
-    
+
     constructor(dbService: DatabaseService = new DatabaseService()) {
         this.dbService = dbService;
     }
@@ -42,7 +42,7 @@ export class MoviesService {
     }
 
     public async getMoviesFromPage(pageNo: number): Promise<MovieFromApi[]> {
-        const scrapperUrl = `${CONFIG.TVMAZE_URI}${CONFIG.TVMAZE_SHOWS_QUERY}${pageNo}`;
+        const scrapperUrl = `${config.get(AppConfig.TVMAZE_URI)}${config.get(AppConfig.TVMAZE_SHOWS_QUERY)}${pageNo}`;
         logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
         try {
             const moviesOnPage = await promiseRetryWrapper(() => axiosInstance.get(scrapperUrl));
@@ -58,7 +58,7 @@ export class MoviesService {
 
     public async getCast(movie: Movie): Promise<Movie> {
         logger.info(`Getting cast for ${movie.name} (id: ${movie.id})`);
-        const scrapperUrl = `${CONFIG.TVMAZE_URI}/${movie.id}${CONFIG.TVMAZE_CAST_PATH}`;
+        const scrapperUrl = `${config.get(AppConfig.TVMAZE_URI)}/${movie.id}${config.get(AppConfig.TVMAZE_CAST_PATH)}`;
         const cast: AxiosResponse<CastFromApi[]> = await axiosInstance.get(scrapperUrl);
         const sortedCast = cast.data.length ? this.sortCast(this.mapCast(cast.data)) : [];
 

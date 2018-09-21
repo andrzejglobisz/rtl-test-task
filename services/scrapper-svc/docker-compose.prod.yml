@@ -2,7 +2,6 @@ version: '3.4'
 services:
   scrapper-svc:
     image: ./some-prod-image
-    env_file: ./services/scrapper-svc/config.prod.env
     restart: always
     expose:
       - "4010"

@@ -23,6 +23,7 @@
         "@types/log4js": "^2.3.5",
         "@types/mongoose": "^5.0.2",
         "@types/moxios": "^0.4.8",
+        "@types/nconf": "^0.0.37",
         "@types/node": "^9.3.0",
         "@types/sinon": "^5.0.2",
         "chokidar-cli": "^1.2.0",
@@ -50,6 +51,7 @@
         "koa-router": "^7.4.0",
         "log4js": "^2.5.3",
         "mongoose": "^5.2.14",
+        "nconf": "^0.10.0",
         "path": "^0.12.7",
         "promise-retry": "^1.1.1"
     },

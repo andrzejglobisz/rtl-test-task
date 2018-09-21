@@ -1,0 +1,15 @@
+{
+    "NODE_ENV": "development",
+    "MONGODB_URI": "mongodb://movies-mongo:27017/movies",
+    "MONGODB_RECONNECT_ATTEMPTS": 3,
+    "MONGODB_RECONNECT_INTERVAL": 10000,
+    "MOVIES_API_URI": "http://movies-api:4000/movies-api",
+    "LISTENING_PORT": 4010,
+    "SERVICE_NAME": "scrapper-svc",
+    "MOVIES_PER_PAGE": 250,
+    "TVMAZE_URI": "http://api.tvmaze.com/shows",
+    "TVMAZE_SHOWS_QUERY": "?page=",
+    "TVMAZE_CAST_PATH": "/cast",
+    "RETRY_REQUEST_TIMEOUT": 5000,
+    "ENV_MODE": "DEV"
+}

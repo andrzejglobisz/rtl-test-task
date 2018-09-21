@@ -4,11 +4,13 @@ services:
     build:
       context: ./services/scrapper-svc
       target: builder
-    env_file: ./services/scrapper-svc/config.dev.env
     volumes:
       - type: bind
         source: ./services/scrapper-svc/build
         target: /app/build
+      - type: bind
+        source: ./services/scrapper-svc/src/config
+        target: /app/build/config
     ports:
       - "4010:4010"
     command: yarn run start-dev

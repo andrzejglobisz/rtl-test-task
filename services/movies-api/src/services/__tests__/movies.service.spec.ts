@@ -3,7 +3,7 @@ import { createSandbox } from 'sinon';
 import MovieModel from '../../models/Movie';
 
 import { MoviesService } from '../movies.service';
-import { moviesMock, moviesFromDbMock } from '../../__mocks__/movies.mock';
+import { moviesMock } from '../../__mocks__/movies.mock';
 
 const sandbox = createSandbox();
 

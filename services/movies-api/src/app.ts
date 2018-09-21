@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-body';
-import config, { AppConfig } from './config.loader';
+import config from './config.loader';
 
 import mongoConnector from './mongo.connector';
 import { MoviesRouter } from './routes/movies.router';
