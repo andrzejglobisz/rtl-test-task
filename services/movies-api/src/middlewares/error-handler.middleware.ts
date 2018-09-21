@@ -2,7 +2,8 @@ import { Context } from 'koa';
 import { getLogger } from 'log4js';
 import { AsyncFunction } from '../types/types';
 
-enum HTTP_STATUS {
+export enum HTTP_STATUS {
+    OK = 200,
     BAD_REQUEST = 400,
     NOT_FOUND = 404,
     INTERNAL_SERVER_ERROR = 500,
