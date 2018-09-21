@@ -1,8 +1,9 @@
 import { getLogger } from 'log4js';
 import * as mongoose from 'mongoose';
+import * as nconf from 'nconf';
 import { promisify } from 'util';
 
-import config, { AppConfig } from './config.loader';
+import { AppConfig } from './types/config';
 
 const defaultLogger = getLogger();
 const setTimeoutPromise = promisify(setTimeout);
@@ -14,8 +15,8 @@ process.on('SIGINT', async () => {
 });
 
 export default async function mongoConnector(): Promise<mongoose.Connection> {
-    const reconnectAttempts: number = config.get(AppConfig.MONGODB_RECONNECT_ATTEMPTS);
-    const reconnectInterval: number = config.get(AppConfig.MONGODB_RECONNECT_INTERVAL);
+    const reconnectAttempts: number = nconf.get(AppConfig.MONGODB_RECONNECT_ATTEMPTS);
+    const reconnectInterval: number = nconf.get(AppConfig.MONGODB_RECONNECT_INTERVAL);
     for (let i = 0; i < reconnectAttempts; i += 1) {
         try {
             if (i > 0) {
@@ -25,7 +26,7 @@ export default async function mongoConnector(): Promise<mongoose.Connection> {
             defaultLogger.info(`[ MongoDB ] Connection attempt: ${i + 1}/${reconnectAttempts} ...`);
 
             await mongoose.connect(
-                config.get(AppConfig.MONGODB_URI),
+                nconf.get(AppConfig.MONGODB_URI),
                 { useNewUrlParser: true }
             );
 

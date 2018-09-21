@@ -1,7 +1,3 @@
-// tslint:disable no-any
-import * as nconf from 'nconf';
-import * as path from 'path';
-
 export enum AppConfig {
     LISTENING_PORT = 'LISTENING_PORT',
     MONGODB_URI = 'MONGODB_URI',
@@ -16,16 +12,3 @@ export enum AppConfig {
     TVMAZE_CAST_PATH = 'TVMAZE_CAST_PATH',
     RETRY_REQUEST_TIMEOUT = 'RETRY_REQUEST_TIMEOUT',
 }
-
-class Config {
-    public load = () => {
-        nconf.env().argv();
-        const environment = nconf.get('NODE_ENV') || 'development';
-
-        nconf.file(path.join(__dirname, `config/config.${environment.toLowerCase()}.json`));
-    };
-
-    public get = (key: string) => nconf.get(key);
-}
-
-export default new Config();

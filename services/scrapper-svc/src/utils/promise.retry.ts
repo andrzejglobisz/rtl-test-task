@@ -1,10 +1,11 @@
 // tslint:disable no-any
+import * as nconf from 'nconf';
 import * as promiseRetry from 'promise-retry';
 import { getLogger } from 'log4js';
 
 import { AnyFunction, AsyncFunction } from '../types/types';
 import { HTTP_STATUS } from '../types/status.codes';
-import config, { AppConfig } from '../config.loader';
+import { AppConfig } from '../types/config';
 
 const logger = getLogger();
 
@@ -23,7 +24,7 @@ export async function promiseRetryWrapper(fn: AsyncFunction): Promise<any> {
                 throw error;
             }
         },
-        { minTimeout: config.get(AppConfig.RETRY_REQUEST_TIMEOUT) }
+        { minTimeout: nconf.get(AppConfig.RETRY_REQUEST_TIMEOUT) }
     );
 
     return result;

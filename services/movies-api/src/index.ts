@@ -1,16 +1,17 @@
 import { getLogger } from 'log4js';
+import * as nconf from 'nconf';
 
 import { bootstrap } from './app';
-import config, { AppConfig } from './config.loader';
+import { AppConfig } from './types/config';
 
 const defaultLogger = getLogger();
 
 bootstrap()
     .then(app => {
         app.listen(
-            config.get(AppConfig.LISTENING_PORT),
+            nconf.get(AppConfig.LISTENING_PORT),
             async (): Promise<void> =>
-                defaultLogger.info(`Server is listening on port ${config.get(AppConfig.LISTENING_PORT)}`)
+                defaultLogger.info(`Server is listening on port ${nconf.get(AppConfig.LISTENING_PORT)}`)
         );
     })
     .catch((err: Error) => {

@@ -1,7 +1,9 @@
+import * as nconf from 'nconf';
+
 import { Movie } from '../types/types';
 
 import MovieModel from '../models/Movie';
-import config, { AppConfig } from '../config.loader';
+import { AppConfig } from '../types/config';
 
 export class DatabaseService {
     public saveMovie = async (movie: Movie) => {
@@ -42,6 +44,6 @@ export class DatabaseService {
     public getCurrentPageToScrap = async (): Promise<number> => {
         const highestId = await this.getHighestId();
 
-        return !!highestId ? Math.floor(highestId / config.get(AppConfig.MOVIES_PER_PAGE)) : 0;
+        return !!highestId ? Math.floor(highestId / nconf.get(AppConfig.MOVIES_PER_PAGE)) : 0;
     };
 }

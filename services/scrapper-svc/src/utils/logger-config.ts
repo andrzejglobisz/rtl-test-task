@@ -1,7 +1,7 @@
+import * as nconf from 'nconf';
 import { configure } from 'log4js';
 import { resolve } from 'path';
-
-import config, { AppConfig } from '../config.loader';
+import { AppConfig } from '../types/config';
 
 export enum LOGGERS {
     HTTP = 'HTTP',
@@ -12,7 +12,7 @@ export default function configureLoggers() {
         resolve(
             process.cwd(),
             'logs',
-            `${logType}.${config.get(AppConfig.SERVICE_NAME)}.${config.get(AppConfig.ENV_MODE).toLowerCase()}.log`
+            `${logType}.${nconf.get(AppConfig.SERVICE_NAME)}.${nconf.get(AppConfig.ENV_MODE).toLowerCase()}.log`
         );
 
     configure({

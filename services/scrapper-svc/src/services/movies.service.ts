@@ -1,3 +1,4 @@
+import * as nconf from 'nconf';
 import { AxiosResponse } from 'axios';
 import { getLogger } from 'log4js';
 import { Cast, CastFromApi, MovieFromApi, Movie } from '../types/types';
@@ -7,8 +8,8 @@ import { asyncForEach } from '../utils/async.foreach';
 import { promiseRetryWrapper } from '../utils/promise.retry';
 import { DatabaseService } from './database.service';
 
-import config, { AppConfig } from '../config.loader';
 import { HTTP_STATUS } from '../types/status.codes';
+import { AppConfig } from '../types/config';
 
 const logger = getLogger();
 
@@ -42,7 +43,7 @@ export class MoviesService {
     }
 
     public async getMoviesFromPage(pageNo: number): Promise<MovieFromApi[]> {
-        const scrapperUrl = `${config.get(AppConfig.TVMAZE_URI)}${config.get(AppConfig.TVMAZE_SHOWS_QUERY)}${pageNo}`;
+        const scrapperUrl = `${nconf.get(AppConfig.TVMAZE_URI)}${nconf.get(AppConfig.TVMAZE_SHOWS_QUERY)}${pageNo}`;
         logger.info(`Getting movies from page no: ${pageNo} (${scrapperUrl})`);
         try {
             const moviesOnPage = await promiseRetryWrapper(() => axiosInstance.get(scrapperUrl));
@@ -58,7 +59,7 @@ export class MoviesService {
 
     public async getCast(movie: Movie): Promise<Movie> {
         logger.info(`Getting cast for ${movie.name} (id: ${movie.id})`);
-        const scrapperUrl = `${config.get(AppConfig.TVMAZE_URI)}/${movie.id}${config.get(AppConfig.TVMAZE_CAST_PATH)}`;
+        const scrapperUrl = `${nconf.get(AppConfig.TVMAZE_URI)}/${movie.id}${nconf.get(AppConfig.TVMAZE_CAST_PATH)}`;
         const cast: AxiosResponse<CastFromApi[]> = await axiosInstance.get(scrapperUrl);
         const sortedCast = cast.data.length ? this.sortCast(this.mapCast(cast.data)) : [];
 

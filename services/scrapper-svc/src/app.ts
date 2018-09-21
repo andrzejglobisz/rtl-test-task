@@ -1,12 +1,16 @@
 import * as http from 'http';
-import config from './config.loader';
+import * as nconf from 'nconf';
+import * as path from 'path';
 
 import mongoConnector from './mongo.connector';
 
 import configureLoggers from './utils/logger-config';
 
 export async function bootstrap(): Promise<http.Server> {
-    config.load();
+    nconf.env().argv();
+    const environment = nconf.get('NODE_ENV') || 'development';
+    nconf.file(path.join(__dirname, `config/config.${environment.toLowerCase()}.json`));
+    
     configureLoggers();
 
     await mongoConnector();
